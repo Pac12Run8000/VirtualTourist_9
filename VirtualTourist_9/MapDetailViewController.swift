@@ -12,6 +12,7 @@ import MapKit
 
 class MapDetailViewController: UIViewController, MKMapViewDelegate {
     
+    // Mark: The locationAnnotation data that is passed from MapViewController
     var locationAnnotation:MKAnnotation!
 
     @IBOutlet weak var mapView: MKMapView!
@@ -19,10 +20,33 @@ class MapDetailViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("lat:\(locationAnnotation.coordinate.latitude), long:\(locationAnnotation.coordinate.longitude)")
+        mapView.delegate = self
+        setSpanAndRegion()
+        setAnnotation()
         
     }
 
-    
+}
 
+
+// Mark: This is the functionality for setting a pin on the mapView
+extension MapDetailViewController {
+    
+    // Mark: Create a pin and pass the coordinates
+    func setAnnotation() {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = locationAnnotation.coordinate
+        annotation.title = ""
+        annotation.subtitle = ""
+        self.mapView.addAnnotation(annotation)
+    }
+    
+    // Mark: Mapkit also requires that you add a span and region
+    func setSpanAndRegion() {
+        let latDelta:CLLocationDegrees = 1.00
+        let longDelta:CLLocationDegrees = 1.00
+        let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: longDelta)
+        let region = MKCoordinateRegion(center: locationAnnotation.coordinate, span: span)
+        self.mapView.setRegion(region, animated: true)
+    }
 }
