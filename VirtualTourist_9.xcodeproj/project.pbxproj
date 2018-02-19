@@ -17,6 +17,8 @@
 		098E3EEA203B1C3600F6CE74 /* PinImage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098E3EE6203B1C3600F6CE74 /* PinImage+CoreDataProperties.swift */; };
 		098E3EEB203B1C3600F6CE74 /* PinAnnotation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098E3EE7203B1C3600F6CE74 /* PinAnnotation+CoreDataClass.swift */; };
 		098E3EEC203B1C3600F6CE74 /* PinAnnotation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098E3EE8203B1C3600F6CE74 /* PinAnnotation+CoreDataProperties.swift */; };
+		098E3EEE203B298C00F6CE74 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098E3EED203B298C00F6CE74 /* CoreDataStack.swift */; };
+		098E3EF0203B2A6100F6CE74 /* MapDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098E3EEF203B2A6100F6CE74 /* MapDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		098E3EE6203B1C3600F6CE74 /* PinImage+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PinImage+CoreDataProperties.swift"; path = "../PinImage+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		098E3EE7203B1C3600F6CE74 /* PinAnnotation+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PinAnnotation+CoreDataClass.swift"; path = "../PinAnnotation+CoreDataClass.swift"; sourceTree = "<group>"; };
 		098E3EE8203B1C3600F6CE74 /* PinAnnotation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PinAnnotation+CoreDataProperties.swift"; path = "../PinAnnotation+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		098E3EED203B298C00F6CE74 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		098E3EEF203B2A6100F6CE74 /* MapDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +71,7 @@
 				098E3EE1203B1A8D00F6CE74 /* FlickrClient */,
 				098E3EE0203B1A8300F6CE74 /* Model */,
 				098E3ECE203B19D200F6CE74 /* AppDelegate.swift */,
+				098E3EEF203B2A6100F6CE74 /* MapDetailViewController.swift */,
 				098E3ED0203B19D200F6CE74 /* MapViewController.swift */,
 				098E3ED2203B19D200F6CE74 /* Main.storyboard */,
 				098E3ED5203B19D200F6CE74 /* Assets.xcassets */,
@@ -84,6 +89,7 @@
 				098E3EE7203B1C3600F6CE74 /* PinAnnotation+CoreDataClass.swift */,
 				098E3EE8203B1C3600F6CE74 /* PinAnnotation+CoreDataProperties.swift */,
 				098E3EE2203B1AD000F6CE74 /* Model.xcdatamodeld */,
+				098E3EED203B298C00F6CE74 /* CoreDataStack.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -173,8 +179,10 @@
 				098E3ED1203B19D200F6CE74 /* MapViewController.swift in Sources */,
 				098E3EE9203B1C3600F6CE74 /* PinImage+CoreDataClass.swift in Sources */,
 				098E3ECF203B19D200F6CE74 /* AppDelegate.swift in Sources */,
+				098E3EF0203B2A6100F6CE74 /* MapDetailViewController.swift in Sources */,
 				098E3EEA203B1C3600F6CE74 /* PinImage+CoreDataProperties.swift in Sources */,
 				098E3EE4203B1AD000F6CE74 /* Model.xcdatamodeld in Sources */,
+				098E3EEE203B298C00F6CE74 /* CoreDataStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
