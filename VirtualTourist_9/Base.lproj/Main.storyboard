@@ -60,12 +60,40 @@
                     <view key="view" contentMode="scaleToFill" id="ZMn-ny-Ae5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="avC-dN-OQe">
+                                <rect key="frame" x="0.0" y="20" width="375" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="twf-UH-aNn"/>
+                                </constraints>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EpQ-vi-dz7">
+                                <rect key="frame" x="0.0" y="612" width="375" height="55"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="UOp-Ck-ZL1"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="New Collection"/>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="uHb-OT-tn7" firstAttribute="top" secondItem="EpQ-vi-dz7" secondAttribute="bottom" id="2k1-yg-e21"/>
+                            <constraint firstItem="EpQ-vi-dz7" firstAttribute="leading" secondItem="ZMn-ny-Ae5" secondAttribute="leading" id="Kq1-KK-5D1"/>
+                            <constraint firstItem="avC-dN-OQe" firstAttribute="top" secondItem="5Bu-8x-UJZ" secondAttribute="bottom" id="WkQ-gP-DTI"/>
+                            <constraint firstAttribute="trailing" secondItem="avC-dN-OQe" secondAttribute="trailing" id="Zya-ad-DMo"/>
+                            <constraint firstAttribute="trailing" secondItem="EpQ-vi-dz7" secondAttribute="trailing" id="abC-Ue-But"/>
+                            <constraint firstItem="avC-dN-OQe" firstAttribute="leading" secondItem="ZMn-ny-Ae5" secondAttribute="leading" id="vSX-qZ-vKP"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="avC-dN-OQe" id="88q-Or-Ykj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cea-Vs-kC7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1969" y="63"/>
+            <point key="canvasLocation" x="1957.5999999999999" y="35.532233883058474"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="0wE-qa-mS6">

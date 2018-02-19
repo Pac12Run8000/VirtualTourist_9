@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import CoreData
 import MapKit
 
-class MapDetailViewController: UIViewController {
+class MapDetailViewController: UIViewController, MKMapViewDelegate {
     
     var locationAnnotation:MKAnnotation!
 
+    @IBOutlet weak var mapView: MKMapView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
