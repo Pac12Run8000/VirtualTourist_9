@@ -68,7 +68,9 @@ class MapDetailViewController: UIViewController, MKMapViewDelegate, UICollection
     @IBAction func getRandomPhotoPage(_ sender: Any) {
 //                print("totalNumberOfPages:\(totalNumberOfPages)")
         // Mark: This gets the random photos from the API call. Nothing is saved to CoreData
-        getRandomImagesForPin()
+        // Mark: Builds the parameters for the methodParameters dictionary
+        methodParameters = getMethodParametersFromCoordinates(myCoord: locationAnnotation.coordinate)
+        getRandomImagesForPin(methodParameters: methodParameters)
         
     }
     
@@ -99,22 +101,22 @@ extension MapDetailViewController {
             //            print("Get Images from CoreData")
             // Mark: This function retrieves PinImage data from CoreData and puts the values in the pinImages array
             self.pinImages = getCoreDataPinImages(pin: pin!)
-            totalNumberOfPages = self.pinImages.count
+//            totalNumberOfPages = self.pinImages.count
             // Mark: We can retrieve the totalNumberOfPhotos when the images are in CoreData
             //            print("totalNumberOfPages:\(self.totalNumberOfPages)")
-            disableNewCollectionButtonIfNoPhotos(numberOfPages: self.totalNumberOfPages)
+//            disableNewCollectionButtonIfNoPhotos(numberOfPages: self.totalNumberOfPages)
             
         }
     }
     
     // Mark: Disable the new Collection button if the number of photos is <= 18
-    func disableNewCollectionButtonIfNoPhotos(numberOfPages:Int) {
-        if (numberOfPages <= 20) {
-            self.newCollectionButton.isEnabled = false
-        } else {
-            self.newCollectionButton.isEnabled = true
-        }
-    }
+//    func disableNewCollectionButtonIfNoPhotos(numberOfPages:Int) {
+//        if (numberOfPages <= 20) {
+//            self.newCollectionButton.isEnabled = false
+//        } else {
+//            self.newCollectionButton.isEnabled = true
+//        }
+//    }
     
     func getCoreDataPinImages(pin:PinAnnotation) -> [PinImage]? {
         
@@ -189,7 +191,7 @@ extension MapDetailViewController {
                     self.totalNumberOfPages = globalPages
                     // Mark: We can get the totalNumberOfPhotos from an API call.
                     //                    print("totalNumberOfPages:\(self.totalNumberOfPages)")
-                    self.disableNewCollectionButtonIfNoPhotos(numberOfPages: self.totalNumberOfPages)
+//                    self.disableNewCollectionButtonIfNoPhotos(numberOfPages: self.totalNumberOfPages)
                     // Mark: This if let statement keeps the app from breaking in the case that the API doesn't return any Photo information
                     if let _ = PinImages {
                         for item in PinImages! {
@@ -213,10 +215,12 @@ extension MapDetailViewController {
     }
     
     // Mark: API call to retrieve random photos
-    func getRandomImagesForPin() {
-        let pageLimit = 20
-        if let pages = totalNumberOfPages, pages >= pageLimit {
-            let randomPage = Int(arc4random_uniform(UInt32(pageLimit))) + 1
+    func getRandomImagesForPin(methodParameters:[String:AnyObject]) {
+//        let pageLimit = 20
+//        if let pages = totalNumberOfPages, pages >= pageLimit {
+            let randomPage = Int(arc4random_uniform(UInt32(20))) + 1
+        
+        
             
             FlickrAPIClient.sharedInstance().getPhotosWithRandomPageNumber(methodParameters, randomPage, self.getCoreDataStack().context, completionHandler: { (success, error, PinImages) in
                 
@@ -235,14 +239,14 @@ extension MapDetailViewController {
                 
             })
             
-        }
+//        }
     }
     
     
     
     
     // Mark: This method use the coordinats of the current PinAnnotation to create the parameters necessary for the API call.
-    private func getMethodParametersFromCoordinates(myCoord:CLLocationCoordinate2D) -> [String:AnyObject] {
+    func getMethodParametersFromCoordinates(myCoord:CLLocationCoordinate2D) -> [String:AnyObject] {
         let methodParameters = [
             FlickrAPIClient.Constants.FlickrParameterKeys.APIKey:FlickrAPIClient.Constants.FlickrParameterValues.APIKey,
             FlickrAPIClient.Constants.FlickrParameterKeys.BoundingBox:bboxString(coord: myCoord),
