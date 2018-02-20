@@ -149,6 +149,6 @@ extension FlickrAPIClient {
     }
 }
 
-//var glob_pages:Int!
+
 
 
