@@ -66,6 +66,9 @@ class MapDetailViewController: UIViewController, MKMapViewDelegate, UICollection
     }
     
     @IBAction func getRandomPhotoPage(_ sender: Any) {
+//                print("totalNumberOfPages:\(totalNumberOfPages)")
+        // Mark: This gets the random photos from the API call. Nothing is saved to CoreData
+        getRandomImagesForPin()
         
     }
     
@@ -288,7 +291,7 @@ extension MapDetailViewController {
     func changeEditState() {
         editState = !editState
         setRightNavbarButtonTitle(editState, editButton)
-        //        print("editState:\(editState)")
+//                print("editState:\(editState)")
     }
     
     func setRightNavbarButtonTitle(_ editState:Bool,_ editButton:UIBarButtonItem) {
@@ -348,9 +351,7 @@ extension MapDetailViewController {
             
         }
         
-        
         return cell
-        
         
     }
     
