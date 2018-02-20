@@ -101,22 +101,10 @@ extension MapDetailViewController {
             //            print("Get Images from CoreData")
             // Mark: This function retrieves PinImage data from CoreData and puts the values in the pinImages array
             self.pinImages = getCoreDataPinImages(pin: pin!)
-//            totalNumberOfPages = self.pinImages.count
-            // Mark: We can retrieve the totalNumberOfPhotos when the images are in CoreData
-            //            print("totalNumberOfPages:\(self.totalNumberOfPages)")
-//            disableNewCollectionButtonIfNoPhotos(numberOfPages: self.totalNumberOfPages)
-            
         }
     }
     
-    // Mark: Disable the new Collection button if the number of photos is <= 18
-//    func disableNewCollectionButtonIfNoPhotos(numberOfPages:Int) {
-//        if (numberOfPages <= 20) {
-//            self.newCollectionButton.isEnabled = false
-//        } else {
-//            self.newCollectionButton.isEnabled = true
-//        }
-//    }
+    
     
     func getCoreDataPinImages(pin:PinAnnotation) -> [PinImage]? {
         
@@ -187,11 +175,7 @@ extension MapDetailViewController {
             if (success)! {
                 // Mark: We use the main queue becasue we are useing the managedObjectContext which is created on the main Queue
                 DispatchQueue.main.async {
-                    //                    print("Global pages:\(globalPages)")
-                    self.totalNumberOfPages = globalPages
-                    // Mark: We can get the totalNumberOfPhotos from an API call.
-                    //                    print("totalNumberOfPages:\(self.totalNumberOfPages)")
-//                    self.disableNewCollectionButtonIfNoPhotos(numberOfPages: self.totalNumberOfPages)
+                    
                     // Mark: This if let statement keeps the app from breaking in the case that the API doesn't return any Photo information
                     if let _ = PinImages {
                         for item in PinImages! {
