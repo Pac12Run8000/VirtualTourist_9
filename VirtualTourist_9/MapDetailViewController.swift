@@ -333,7 +333,8 @@ extension MapDetailViewController {
         cell.activityIndicator.startAnimating()
         FlickrAPIClient.sharedInstance().getImageData(url: pinImage.url!) { (data, error) in
             
-            cell.imageView.image = UIImage(data: data!)
+            // Mark: imageData is a property observer of the CustomCell class
+            cell.imageData = data
             cell.activityIndicator.startAnimating()
             cell.activityIndicator.isHidden = true
             
@@ -342,6 +343,8 @@ extension MapDetailViewController {
         return cell
         
     }
+    
+    
     
     // Mark: When the collectionView initially loads
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

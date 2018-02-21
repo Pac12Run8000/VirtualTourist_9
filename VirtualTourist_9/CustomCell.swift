@@ -15,4 +15,12 @@ class CustomCell: UICollectionViewCell {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     
+    // Mark: I used a property observer to build an image using Data
+    var imageData:Data! {
+        didSet {
+            imageView.image = UIImage(data: imageData)
+        }
+    }
+    
+    
 }
