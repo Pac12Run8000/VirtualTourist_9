@@ -56,6 +56,18 @@ class FlickrAPIClient: NSObject {
         
         session = URLSession.shared
         
+//        let imgUrl = NSURL(string: url)
+//        let request = NSURLRequest(url: imgUrl! as URL)
+//        let task = session.dataTask(with: request as URLRequest) { (downloadData, response, downloadError) in
+//            if (downloadError != nil) {
+//                completionHandler(nil, downloadError?.localizedDescription)
+//            } else {
+//                completionHandler(downloadData, nil)
+//            }
+//        }
+//        task.resume()
+        
+        
         DispatchQueue.main.async {
             if let imageUrl = URL(string: url), let imageData = try? Data(contentsOf:imageUrl) {
                 completionHandler(imageData, nil)
@@ -63,8 +75,8 @@ class FlickrAPIClient: NSObject {
                 completionHandler(nil, "There was an error getting the image")
             }
         }
-        
     }
+    
     
     func taskForGetPhotosWithPageNumber(_ params:[String:AnyObject], withPageNumber:Int, completionHandlerForGetPhotosTask: @escaping (_ data:Data?, _ error:Error?) -> ()) {
         

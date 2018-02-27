@@ -104,14 +104,44 @@
                                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Z0F-5V-ZVy">
                                                     <rect key="frame" x="7" y="7" width="37" height="37"/>
                                                 </activityIndicatorView>
+                                                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KSb-Yv-2gS">
+                                                    <rect key="frame" x="5" y="5" width="20" height="20"/>
+                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="lfJ-Yd-aFY">
+                                                        <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HT3-SZ-IKy">
+                                                                <rect key="frame" x="4" y="4" width="12" height="12"/>
+                                                                <state key="normal" image="close"/>
+                                                                <connections>
+                                                                    <action selector="deleteButtonDidTap:" destination="zer-8c-u8d" eventType="touchUpInside" id="Yst-zb-iRS"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="trailing" secondItem="HT3-SZ-IKy" secondAttribute="trailing" constant="4" id="DGY-fM-N3A"/>
+                                                            <constraint firstItem="HT3-SZ-IKy" firstAttribute="leading" secondItem="lfJ-Yd-aFY" secondAttribute="leading" constant="4" id="QKm-ZN-sPG"/>
+                                                            <constraint firstAttribute="bottom" secondItem="HT3-SZ-IKy" secondAttribute="bottom" constant="4" id="Yth-z4-CCz"/>
+                                                            <constraint firstItem="HT3-SZ-IKy" firstAttribute="top" secondItem="lfJ-Yd-aFY" secondAttribute="top" constant="4" id="q3B-9i-r6O"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="20" id="A9u-Sc-7Ic"/>
+                                                        <constraint firstAttribute="height" constant="20" id="pzS-Fz-rLK"/>
+                                                    </constraints>
+                                                    <blurEffect style="extraLight"/>
+                                                </visualEffectView>
                                             </subviews>
                                         </view>
                                         <constraints>
                                             <constraint firstItem="Z0F-5V-ZVy" firstAttribute="centerY" secondItem="zer-8c-u8d" secondAttribute="centerY" id="CGn-y2-UEQ"/>
                                             <constraint firstItem="Z0F-5V-ZVy" firstAttribute="centerX" secondItem="zer-8c-u8d" secondAttribute="centerX" id="Efb-qQ-AP3"/>
+                                            <constraint firstItem="KSb-Yv-2gS" firstAttribute="leading" secondItem="zer-8c-u8d" secondAttribute="leading" constant="5" id="T67-F9-r8C"/>
+                                            <constraint firstItem="KSb-Yv-2gS" firstAttribute="top" secondItem="zer-8c-u8d" secondAttribute="top" constant="5" id="lsT-B3-g8F"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="activityIndicator" destination="Z0F-5V-ZVy" id="g85-TN-6To"/>
+                                            <outlet property="deleteButtonBackgroundView" destination="KSb-Yv-2gS" id="Qlp-nn-bp8"/>
                                             <outlet property="imageView" destination="SO3-w5-20C" id="vj0-Ro-Aj1"/>
                                         </connections>
                                     </collectionViewCell>
@@ -162,4 +192,7 @@
             <point key="canvasLocation" x="-23" y="36"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="close" width="512" height="512"/>
+    </resources>
 </document>

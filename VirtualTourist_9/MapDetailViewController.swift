@@ -19,7 +19,7 @@ class MapDetailViewController: UIViewController, MKMapViewDelegate, UICollection
     // Mark: Declaration of the delegate used to access CoreDataStack
     let delegate = UIApplication.shared.delegate as! AppDelegate
     // Mark: FetchedResultsController declaration
-    var fetchedResultsController:NSFetchedResultsController<NSFetchRequestResult>?
+//    var fetchedResultsController:NSFetchedResultsController<NSFetchRequestResult>?
     // Mark: This property is for the current PinAnnotation
     var pin:PinAnnotation?
     // Mark: declaration of PinImages variable
@@ -29,7 +29,7 @@ class MapDetailViewController: UIViewController, MKMapViewDelegate, UICollection
     // Mark: This is the total number of pages for the PinImages
     var totalNumberOfPages:Int!
     // Mar: This will denote if the editState or DoneState is in effect
-    var editState:Bool = true
+    var isCollectionViewInEditingMode:Bool = false
     
     var editButton:UIBarButtonItem!
 
@@ -49,7 +49,9 @@ class MapDetailViewController: UIViewController, MKMapViewDelegate, UICollection
         collectionViewDelegateAndDataSource()
         flowLayoutSetUp()
         
-        addButtonToNavBar()
+        // Mark: This is where we add the editButton to the navbar. This edit button allows you to delete a photo from the collectionView
+        navigationItem.rightBarButtonItem = editButtonItem
+//        addButtonToNavBar()
         
     }
     
@@ -64,6 +66,8 @@ class MapDetailViewController: UIViewController, MKMapViewDelegate, UICollection
         shouldCallGetArrayOfPhotos()
         
     }
+    
+    
     
     @IBAction func getRandomPhotoPage(_ sender: Any) {
 //                print("totalNumberOfPages:\(totalNumberOfPages)")
@@ -146,9 +150,10 @@ extension MapDetailViewController {
         let pred = NSPredicate(format: "lat = %lf AND long = %lf", annotation.coordinate.latitude, annotation.coordinate.longitude)
         fetchRequest.predicate = pred
         
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.getCoreDataStack().context, sectionNameKeyPath: nil, cacheName: nil)
+//        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.getCoreDataStack().context, sectionNameKeyPath: nil, cacheName: nil)
         do {
-            let results = try fetchedResultsController?.managedObjectContext.fetch(fetchRequest) as! [PinAnnotation]
+            let results = try getCoreDataStack().context.fetch(fetchRequest) as! [PinAnnotation]
+//            let results = try fetchedResultsController?.managedObjectContext.fetch(fetchRequest) as! [PinAnnotation]
             
             if  results.count > 0 {
                 myAnnotation = results[0]
@@ -269,44 +274,49 @@ extension MapDetailViewController {
 
 extension MapDetailViewController {
     // Mark: Called in the ViewDidLoad.
-    func addButtonToNavBar() {
-        editButton = UIBarButtonItem(title: "Edit", style: .plain, target:self, action: #selector(changeEditState))
-        self.navigationItem.rightBarButtonItem = editButton
+//    func addButtonToNavBar() {
+//        editButton = UIBarButtonItem(title: "Edit", style: .plain, target:self, action: #selector(changeEditState))
+//        self.navigationItem.rightBarButtonItem = editButton
         
-    }
+//    }
     
     // Mark: This function is called by the selector for the editbutton on the navbar
-    func changeEditState() {
-        editState = !editState
-        setRightNavbarButtonTitle(editState, editButton)
+//    func changeEditState() {
+//        editState = !editState
+//        setRightNavbarButtonTitle(editState, editButton)
 //                print("editState:\(editState)")
-    }
+//    }
     
-    func setRightNavbarButtonTitle(_ editState:Bool,_ editButton:UIBarButtonItem) {
-        if (editState) {
-            editButton.title = "Edit"
-        } else {
-            editButton.title = "Done"
-        }
-    }
+//    func setRightNavbarButtonTitle(_ editState:Bool,_ editButton:UIBarButtonItem) {
+//        if (editState) {
+//            editButton.title = "Edit"
+//        } else {
+//            editButton.title = "Done"
+//        }
+//    }
     
 }
 
 // Mark: The collectionView functionality is here
 extension MapDetailViewController {
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    // Mark: This is a function used with tableViews and collectionView
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        // Mark: whether the collectionView is editing is set by this function
+        isCollectionViewInEditingMode = editing
         
-        if (!editState) {
-            // Mark:
-            pinImages.remove(at: indexPath.row)
-            self.collectionView.reloadData()
-            print("delete:\(indexPath.row)")
-        } else {
-            print("do not delete:\(indexPath.row)")
+        if let indexPaths = collectionView?.indexPathsForVisibleItems {
+            for indexPath in indexPaths {
+                if let cell = collectionView?.cellForItem(at: indexPath) as? CustomCell {
+                    // Mark: set a value of the Property observer in the CustomCell class
+                    cell.isEditing = editing
+                    
+                }
+            }
         }
-        print("indexPath:\(indexPath.row)")
     }
+
     
     // Mark: Called from ViewDidLoad
     func collectionViewDelegateAndDataSource() {
@@ -329,14 +339,21 @@ extension MapDetailViewController {
         let pinImage = pinImages[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCell
         cell.imageView.image = nil
+        // Mark: The deleteButtonBackgroundView must immediatley be hidden
+        cell.deleteButtonBackgroundView.isHidden = true
         cell.activityIndicator.isHidden = false
         cell.activityIndicator.startAnimating()
+        // Mark: I am setting the editing mode here rather than inside the CustomCell
+        cell.isEditing = isCollectionViewInEditingMode
+        
         FlickrAPIClient.sharedInstance().getImageData(url: pinImage.url!) { (data, error) in
             
             // Mark: imageData is a property observer of the CustomCell class
+            
             cell.imageData = data
-            cell.activityIndicator.startAnimating()
+            cell.activityIndicator.stopAnimating()
             cell.activityIndicator.isHidden = true
+            cell.delegate = self
             
         }
         
@@ -356,6 +373,18 @@ extension MapDetailViewController {
         }
     }
     
+}
+
+// Mark: Conforming to CustomCellDelegate
+extension MapDetailViewController:CustomCellDelegate {
+    
+    func delete(cell: CustomCell) {
+        if let indexPath = collectionView?.indexPath(for: cell) {
+            pinImages.remove(at:indexPath.row)
+            collectionView.deleteItems(at: [indexPath])
+        }
+    }
+
 }
 
 
