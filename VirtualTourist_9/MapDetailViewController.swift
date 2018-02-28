@@ -102,6 +102,8 @@ extension MapDetailViewController {
             // Mark: this function retrieves the PinImage data from the Flickr API and puts PinImage data into the pinImages array
             getArrayOfPhotos(theLocation: locationAnnotation)
         } else {
+            
+            print("Return ordered from coreData.")
             //            print("Get Images from CoreData")
             // Mark: This function retrieves PinImage data from CoreData and puts the values in the pinImages array
             self.pinImages = getCoreDataPinImages(pin: pin!)
@@ -111,6 +113,8 @@ extension MapDetailViewController {
     
     
     func getCoreDataPinImages(pin:PinAnnotation) -> [PinImage]? {
+        
+        
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "PinImage")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
@@ -124,11 +128,17 @@ extension MapDetailViewController {
         } catch {
             print("There was an error retrieving images")
         }
-        return coreDataPinImages
+        
         
         //        for item in coreDataPinImages {
         //            print("title:\(item.title), url:\(item.url)")
         //        }
+        
+        return coreDataPinImages
+        
+        
+        
+        
         
     }
     
@@ -380,19 +390,18 @@ extension MapDetailViewController:CustomCellDelegate {
     
     func delete(cell: CustomCell) {
         if let indexPath = collectionView?.indexPath(for: cell) {
-            
-            pinImages.remove(at: indexPath.row)
-            collectionView.deleteItems(at: [indexPath])
-            
-            if let myPin = pinImages[indexPath.row - 1] as? PinImage {
-                getCoreDataStack().context.delete(myPin)
+            // Mark: retrieve the pinToDelete first. If the pinToDelete is present then remove from collectionView and pinImage array
+            if let pinToDelete = pinImages[indexPath.row] as? PinImage {
+                pinImages.remove(at: indexPath.row)
+                collectionView.deleteItems(at: [indexPath])
+                getCoreDataStack().context.delete(pinToDelete)
                 do {
-                    try getCoreDataStack().saveContext()
+                    try getCoreDataStack().context.save()
                 } catch {
-                    print("There was an error while saving to CoreData.")
+                    print("There was an error while saving context")
                 }
             }
-            
+
             
         }
     }

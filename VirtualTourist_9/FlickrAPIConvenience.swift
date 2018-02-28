@@ -91,13 +91,37 @@ extension FlickrAPIClient {
                 }
                 do {
                     try managedObjectContext.save()
-                    //                    print("Images Saved!!!!!!")
+                    // Mark: This function is used to return [PinImage] in an order based on title. Otherwise the array is returned in an arbitrary order.
+                    self.getOrderedPinImages(pin, managedObjectContext, orderPinImageCompletionHandler: { (pinImages) in
+                        handler(pinImages)
+                    })
                 } catch {
+                    handler(nil)
                     print("There was an error when attempting to save pinImages")
                 }
-                handler(pinImages)
+                
+
             }
         }
+    }
+    
+
+    // Mark: Returns pinImages in oreder ascending based on title
+    func getOrderedPinImages(_ pin:PinAnnotation,_ managedObjectContext:NSManagedObjectContext, orderPinImageCompletionHandler handler:@escaping(_ photoArray:[PinImage]?) -> ()) {
+        print("Return ordered for API call.")
+        var coreDataPinImages = [PinImage]()
+        
+        let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "PinImage")
+        fr.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        let pred = NSPredicate(format: "pinAnnotation = %@", pin)
+        fr.predicate = pred
+        do {
+            coreDataPinImages = try managedObjectContext.fetch(fr) as! [PinImage]
+        } catch {
+            print("There was an error retrieving images from CoreData to display.")
+        }
+        handler(coreDataPinImages)
+
     }
     
     func getPhotosWithRandomPageNumber(_ params:[String:AnyObject],_ withPageNumber:Int,_ managedObjectContext:NSManagedObjectContext, completionHandler: @escaping (_ success:Bool?, _ error:String?,_ photos:[PinImage]?)->()) {
