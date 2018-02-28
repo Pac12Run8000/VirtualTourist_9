@@ -380,8 +380,16 @@ extension MapDetailViewController:CustomCellDelegate {
     
     func delete(cell: CustomCell) {
         if let indexPath = collectionView?.indexPath(for: cell) {
+            print("indexPath:\(indexPath.row), pinImages:\(pinImages.count)")
             pinImages.remove(at:indexPath.row)
             collectionView.deleteItems(at: [indexPath])
+            let myPin = pinImages[indexPath.row - 1]
+            getCoreDataStack().context.delete(myPin)
+            do {
+                try getCoreDataStack().saveContext()
+            } catch {
+                print("Error while saving.")
+            }
         }
     }
 

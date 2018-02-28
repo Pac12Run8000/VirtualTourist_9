@@ -107,8 +107,8 @@
 			isa = PBXGroup;
 			children = (
 				098E3EF1203B319300F6CE74 /* FlickrAPIClient.swift */,
-				098E3EF3203B31D700F6CE74 /* FlickrAPIConvenience.swift */,
 				098E3EF5203B31EF00F6CE74 /* FlickrAPIConstants.swift */,
+				098E3EF3203B31D700F6CE74 /* FlickrAPIConvenience.swift */,
 			);
 			name = FlickrClient;
 			sourceTree = "<group>";
@@ -362,6 +362,7 @@
 				098E3EDF203B19D200F6CE74 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
