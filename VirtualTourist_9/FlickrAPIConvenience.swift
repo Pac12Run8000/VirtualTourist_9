@@ -95,6 +95,8 @@ extension FlickrAPIClient {
                     self.getOrderedPinImages(pin, managedObjectContext, orderPinImageCompletionHandler: { (pinImages) in
                         handler(pinImages)
                     })
+                    // Mark: Just returning pinImages here gives an array that is not in order. This will lead to inaccurate deletion of pinImages.
+//                    handler(pinImages)
                 } catch {
                     handler(nil)
                     print("There was an error when attempting to save pinImages")
@@ -165,15 +167,6 @@ extension FlickrAPIClient {
                 return
             }
             
-            //            var count:Int = 0
-            //
-            //            for item in photo {
-            //                count += 1
-            //            }
-            //
-            //            print("count:\(count)")
-            //
-            //                        print("photoArray:\(photo)")
             
             self.retrieveRandomPhotoImageData(PinImageDictionary: photo, managedObjectContext: managedObjectContext, pinImageCompletionhandler: { (PinImages) in
                 
