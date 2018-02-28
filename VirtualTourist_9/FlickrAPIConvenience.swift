@@ -110,7 +110,6 @@ extension FlickrAPIClient {
 
     // Mark: Returns pinImages in oreder ascending based on title
     func getOrderedPinImages(_ pin:PinAnnotation,_ managedObjectContext:NSManagedObjectContext, orderPinImageCompletionHandler handler:@escaping(_ photoArray:[PinImage]?) -> ()) {
-        print("Return ordered for API call.")
         var coreDataPinImages = [PinImage]()
         
         let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "PinImage")

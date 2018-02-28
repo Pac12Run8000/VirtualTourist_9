@@ -18,8 +18,6 @@ class MapDetailViewController: UIViewController, MKMapViewDelegate, UICollection
     var methodParameters:[String:AnyObject]!
     // Mark: Declaration of the delegate used to access CoreDataStack
     let delegate = UIApplication.shared.delegate as! AppDelegate
-    // Mark: FetchedResultsController declaration
-//    var fetchedResultsController:NSFetchedResultsController<NSFetchRequestResult>?
     // Mark: This property is for the current PinAnnotation
     var pin:PinAnnotation?
     // Mark: declaration of PinImages variable
@@ -103,7 +101,7 @@ extension MapDetailViewController {
             getArrayOfPhotos(theLocation: locationAnnotation)
         } else {
             
-            print("Return ordered from coreData.")
+            
             //            print("Get Images from CoreData")
             // Mark: This function retrieves PinImage data from CoreData and puts the values in the pinImages array
             self.pinImages = getCoreDataPinImages(pin: pin!)
@@ -159,11 +157,8 @@ extension MapDetailViewController {
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "lat", ascending: true), NSSortDescriptor(key: "long", ascending: true)]
         let pred = NSPredicate(format: "lat = %lf AND long = %lf", annotation.coordinate.latitude, annotation.coordinate.longitude)
         fetchRequest.predicate = pred
-        
-//        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.getCoreDataStack().context, sectionNameKeyPath: nil, cacheName: nil)
         do {
             let results = try getCoreDataStack().context.fetch(fetchRequest) as! [PinAnnotation]
-//            let results = try fetchedResultsController?.managedObjectContext.fetch(fetchRequest) as! [PinAnnotation]
             
             if  results.count > 0 {
                 myAnnotation = results[0]
