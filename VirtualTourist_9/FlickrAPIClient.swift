@@ -45,36 +45,21 @@ class FlickrAPIClient: NSObject {
         task.resume()
     }
     
-    
-    
-    
-    
-    
+
     // function which uses URLRequest to get the image data
-    
     func getImageData (url:String, completionHandler : @escaping (_ data: Data?, _ error: String?) -> ()) {
         
         session = URLSession.shared
-        
-//        let imgUrl = NSURL(string: url)
-//        let request = NSURLRequest(url: imgUrl! as URL)
-//        let task = session.dataTask(with: request as URLRequest) { (downloadData, response, downloadError) in
-//            if (downloadError != nil) {
-//                completionHandler(nil, downloadError?.localizedDescription)
-//            } else {
-//                completionHandler(downloadData, nil)
-//            }
-//        }
-//        task.resume()
-        
-        
-        DispatchQueue.main.async {
-            if let imageUrl = URL(string: url), let imageData = try? Data(contentsOf:imageUrl) {
-                completionHandler(imageData, nil)
+        let imgUrl = NSURL(string: url)
+        let request = NSURLRequest(url: imgUrl! as URL)
+        let task = session.dataTask(with: request as URLRequest) { (downloadData, response, downloadError) in
+            if (downloadError != nil) {
+                completionHandler(nil, downloadError?.localizedDescription)
             } else {
-                completionHandler(nil, "There was an error getting the image")
+                completionHandler(downloadData, nil)
             }
         }
+        task.resume()
     }
     
     
