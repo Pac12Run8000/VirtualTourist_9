@@ -161,6 +161,17 @@ extension FlickrAPIClient {
     }
 }
 
+// Mark: Array for method parameters required for the API call
+var methodParameters:[String:AnyObject]!
+
+// Mark: declaration of PinImages variable
+var pinImages:[PinImage]!
+
+// Mark: This variable is used in the getCoreDataPinImages function.
+var coreDataPinImages:[PinImage]!
+
+
+
 
 
 

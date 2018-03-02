@@ -14,16 +14,11 @@ class MapDetailViewController: UIViewController, MKMapViewDelegate, UICollection
     
     // Mark: The locationAnnotation data that is passed from MapViewController
     var locationAnnotation:MKAnnotation!
-    // Mark: Array for method parameters required for the API call
-    var methodParameters:[String:AnyObject]!
+   
     // Mark: Declaration of the delegate used to access CoreDataStack
     let delegate = UIApplication.shared.delegate as! AppDelegate
     // Mark: This property is for the current PinAnnotation
     var pin:PinAnnotation?
-    // Mark: declaration of PinImages variable
-    var pinImages:[PinImage]!
-    // Mark: This variable is used in the getCoreDataPinImages function.
-    var coreDataPinImages:[PinImage]!
     // Mark: This is the total number of pages for the PinImages
     var totalNumberOfPages:Int!
     // Mar: This will denote if the editState or DoneState is in effect
@@ -104,7 +99,7 @@ extension MapDetailViewController {
             
             //            print("Get Images from CoreData")
             // Mark: This function retrieves PinImage data from CoreData and puts the values in the pinImages array
-            self.pinImages = getCoreDataPinImages(pin: pin!)
+            pinImages = getCoreDataPinImages(pin: pin!)
         }
     }
     
@@ -122,7 +117,7 @@ extension MapDetailViewController {
         
         do {
             // Mark: coreDataPinImages is declared at the top of the controller because if I declare it in the function it will be a let property and it has to be a var.
-            self.coreDataPinImages = try getCoreDataStack().context.fetch(fetchRequest) as! [PinImage]
+            coreDataPinImages = try getCoreDataStack().context.fetch(fetchRequest) as! [PinImage]
         } catch {
             print("There was an error retrieving images")
         }
@@ -191,7 +186,7 @@ extension MapDetailViewController {
                         for item in PinImages! {
                             item.pinAnnotation = self.pin
                         }
-                        self.pinImages = PinImages
+                        pinImages = PinImages
                         self.collectionView.reloadData()
                     }
                     
@@ -219,7 +214,7 @@ extension MapDetailViewController {
             FlickrAPIClient.sharedInstance().getPhotosWithRandomPageNumber(methodParameters, randomPage, self.getCoreDataStack().context, completionHandler: { (success, error, PinImages) in
                 
                 if (success)! {
-                    self.pinImages = PinImages
+                    pinImages = PinImages
                     self.collectionView.reloadData()
                 } else {
                     // Mark: This is the functionality that handles the error message if the network request fails. I used some optional binding her as well
