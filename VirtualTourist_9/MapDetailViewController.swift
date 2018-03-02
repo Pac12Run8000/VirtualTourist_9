@@ -349,17 +349,17 @@ extension MapDetailViewController {
         FlickrAPIClient.sharedInstance().getImageData(url: pinImage.url!) { (data, error) in
             
             // Mark: imageData is a property observer of the CustomCell class
-            
-            cell.imageData = data
-            do {
-                try self.getCoreDataStack().context.save()
-            } catch {
-                print("There was an error saving the imageData context")
+            DispatchQueue.main.async {
+                cell.imageData = data
+                do {
+                    try self.getCoreDataStack().context.save()
+                } catch {
+                    print("There was an error saving the imageData context")
+                }
+                cell.activityIndicator.stopAnimating()
+                cell.activityIndicator.isHidden = true
+                cell.delegate = self
             }
-            cell.activityIndicator.stopAnimating()
-            cell.activityIndicator.isHidden = true
-            cell.delegate = self
-            
         }
         
         return cell
