@@ -351,6 +351,11 @@ extension MapDetailViewController {
             // Mark: imageData is a property observer of the CustomCell class
             
             cell.imageData = data
+            do {
+                try self.getCoreDataStack().context.save()
+            } catch {
+                print("There was an error saving the imageData context")
+            }
             cell.activityIndicator.stopAnimating()
             cell.activityIndicator.isHidden = true
             cell.delegate = self
